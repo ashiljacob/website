@@ -5,6 +5,7 @@ Login And Registration Page
 ### Prerequisites
 
 django == 2.2.8
+
 django_restframework == 3.11.0
 
 
@@ -14,18 +15,9 @@ django_restframework == 3.11.0
 pip install django
 pip install djangorestframework
 ```
-Run Command
-```
 
+```
 python manage.py runserver
-
-```
-
-
-
-
-
-
 ```
 
 
