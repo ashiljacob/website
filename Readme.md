@@ -30,7 +30,7 @@ python manage.py runserver
 
 ## Authors
 
-* **Ashil Jacob** - *Initial work* - [PurpleBooth](https://github.com/ashiljacob)
+* **Ashil Jacob** - *Initial work* - [Law Firm Website](https://github.com/ashiljacob/lawyerwebsite)
 
 
 
