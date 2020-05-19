@@ -1,0 +1,17 @@
+from django.conf.urls import url
+from django.urls import path
+from app1 import views
+
+
+urlpatterns = [
+    path('', views.home),
+    path('caccount/', views.registration),
+    path('caccount/reg_upload/',views.reg_upload),
+    path('dash_board/',views.dash_board),
+    path('dash_board/logout/',views.logout),
+    path('logout/',views.logout),
+    path('rest/',views.userList.as_view()),
+]
+
+
+
