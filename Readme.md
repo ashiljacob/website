@@ -21,7 +21,7 @@ pip install djangorestframework
 ```
 python manage.py runserver
 
-
+```
 ## Built With
 
 * [Django](https://docs.djangoproject.com/en/3.0/) - The web framework used
