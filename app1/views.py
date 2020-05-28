@@ -1,23 +1,13 @@
-from datetime import date
-
-from django.contrib.messages.storage import session
 from datetime import datetime
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
 
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
 # Create your views here.
-from django.template import loader
-from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate, login, logout
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from app1.models import User
-
-
-# Home Page
+from app1.models import User,Activity
 from app1.serializers import userSerializer
 
 
@@ -30,14 +20,14 @@ def home(request):
 def dash_board(request):
     if request.method == 'POST':
         if User.objects.filter(username=request.POST['username'], password=request.POST['password']).exists():
-            global user
             user = User.objects.get(username=request.POST['username'], password=request.POST['password'])
+            request.session['user'] = user.name
 
-            #request.session['user'] = user
+            act = Activity.objects.create(user=user,log_in=datetime.now())
+            # Getting Id of the Actibvity Table
+            temp = list(Activity.objects.filter(user=user))
+            request.session['id'] = temp[-1].id
 
-            act = User.objects.get(id=user.id)
-            act.login_time = datetime.now()
-            act.save()
             return render(request, 'dash.html', {'user': user, })
 
         else:
@@ -73,8 +63,8 @@ def reg_upload(request):
 @csrf_exempt
 def logout(request):
     if request.method == "POST":
-        act = User.objects.get(id=user.id)
-        act.logout_time=datetime.now()
+        act = Activity.objects.get(id=request.session['id'])
+        act.log_out = datetime.now()
         act.save()
         return render(request,'index.html')
     else:
