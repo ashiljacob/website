@@ -23,4 +23,4 @@ class Activity(models.Model):
     log_out = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.user.name
+        return self.user
