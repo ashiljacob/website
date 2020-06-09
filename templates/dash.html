@@ -2,15 +2,34 @@
 {% block content %}
 
 <h1>Welcome {{user.name}}</h1>
+<h2>Time Zone :{{user.timezone}}</h2>
+<h3>{{user.name}}  Activity Record</h3>
 
-    <form method="post" action="{% url 'logout' %}">
+<form method="post" action="{% url 'logout' %}">
 
-        {{ for i in act }}
-            <li>{{i}} </li>
 
-        {{ endfor }}
+    <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Log In Time</th>
+              <th scope="col">Log Out Time</th>
+            </tr>
+          </thead>
+          <tbody>
+           {% for i in act %}
+           <tr>
+                      <th scope="row">{{ forloop.counter }}</th>  <!--- {{forloop.counter}} gives auto numbers in DTL --->
+                      <td>{{i.log_in}}</td>
+                      <td>{{i.log_out}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+    </table>
 
-        <button type="submit" class="btn btn-primary">LogOut</button>
-    </form>
+
+
+    <button type="submit" class="btn btn-primary">LogOut</button>
+</form>
 
 {% endblock %}

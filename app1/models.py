@@ -16,9 +16,9 @@ class User(models.Model):
 
 
 class Activity(models.Model):
-    user = models.ForeignKey(User, related_name="activity_periods",on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="activity_periods",on_delete=models.CASCADE,null=True, blank=True)
     log_in = models.DateTimeField(null=True, blank=True)
     log_out = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return self.user
+        return self.user.name

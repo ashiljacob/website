@@ -24,15 +24,16 @@ def dash_board(request):
             user = User.objects.get(username=request.POST['username'], password=request.POST['password'])
             request.session['user'] = user.name
 
-            act = Activity.objects.create(user=user,log_in=datetime.now())
+            Activity.objects.create(user=user,log_in=datetime.now())
             # Getting Id of the Actibvity Table
             temp = list(Activity.objects.filter(user=user))
 
-            request.session['id'] = temp[-1].id
+            request.session['id'] = temp[-1].id # Passing Id of Activity to Signout
 
-            act = Activity.objects.filter(id=temp[-1].id)
-            print("--------------------",[i for i in act])
-            return render(request, 'dash.html', {'user': user, 'act' : act})
+            # Getting User activity
+            act = Activity.objects.filter(user=user)
+            print("--------------------",act)
+            return render(request, 'dash.html', {'user': user, 'act' :act})
 
         else:
             return render(request, 'index.html')

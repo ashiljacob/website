@@ -8,6 +8,6 @@ urlpatterns = [
     path('caccount/reg_upload/', views.reg_upload, name='reg_upload'),
     path('dash_board/', views.dash_board, name='dashboard'),
     path('logout/', views.logout, name='logout'),
-    #path('rest/', views.UserList.as_view()),
-    path('act/',views.ActivityListView.as_view()),
+    # Rest Api's
+    path('rest/',views.ActivityListView.as_view()),
 ]
