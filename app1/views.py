@@ -4,11 +4,12 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from rest_framework import viewsets
 from app1.models import User,Activity
-from app1.serializers import userSerializer
+from app1.serializers import UserSerializer,ActivitySerializer
 
 
 def home(request):
@@ -26,9 +27,12 @@ def dash_board(request):
             act = Activity.objects.create(user=user,log_in=datetime.now())
             # Getting Id of the Actibvity Table
             temp = list(Activity.objects.filter(user=user))
+
             request.session['id'] = temp[-1].id
 
-            return render(request, 'dash.html', {'user': user, })
+            act = Activity.objects.filter(id=temp[-1].id)
+            print("--------------------",[i for i in act])
+            return render(request, 'dash.html', {'user': user, 'act' : act})
 
         else:
             return render(request, 'index.html')
@@ -71,10 +75,10 @@ def logout(request):
         return HttpResponse("<h1>Error While LogOut..!!</h1>")
 
 
-# REst
-class userList(APIView):
+# REstFul API
 
-    def get(self,request):
-        user1 = User.objects.all()
-        serializer = userSerializer(user1, many=True)
-        return Response(serializer.data)
+class ActivityListView(generics.ListAPIView):
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    name = "activity-list"

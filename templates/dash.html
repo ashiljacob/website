@@ -5,6 +5,11 @@
 
     <form method="post" action="{% url 'logout' %}">
 
+        {{ for i in act }}
+            <li>{{i}} </li>
+
+        {{ endfor }}
+
         <button type="submit" class="btn btn-primary">LogOut</button>
     </form>
 
