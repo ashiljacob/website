@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     # Rest Api's
     path('rest/',views.ActivityListView.as_view()),
+
 ]

@@ -10,9 +10,18 @@ class ActivitySerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # Passing login Logout to User
-    activity_periods = ActivitySerializer(many=True, read_only=True)
+    # Passing Activities Of User
+    activity_periods = ActivitySerializer(many=True,read_only=False)
 
     class Meta:
         model = User
         fields = ['name', 'username','timezone', 'activity_periods']
+
+    # For Adding Post Data Of Activity in request , Overriding create method
+    def create(self, validated_data):
+        act = validated_data.pop('activity_periods')
+        user = User.objects.create(**validated_data)
+        # Looping through Activities
+        for i in act:
+            Activity.objects.create(user=user, **i)
+        return user
